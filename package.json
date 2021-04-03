@@ -1,0 +1,24 @@
+{
+  "name": "pokemon-game-api-node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon app"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JooLuiz/Pokemon-Game-API-Node.git"
+  },
+  "author": "João Luiz de Castro",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JooLuiz/Pokemon-Game-API-Node/issues"
+  },
+  "homepage": "https://github.com/JooLuiz/Pokemon-Game-API-Node#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "mongoose": "^5.12.3"
+  }
+}
