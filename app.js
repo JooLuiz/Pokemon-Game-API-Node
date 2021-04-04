@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
 const cors = require('cors');
+const bodyParser = require('body-parser');
 
 //connecting to mongoDB
 mongoose.connect('mongodb://localhost/pokemongame');
@@ -24,6 +25,10 @@ const app = express();
 //Enabeling cors
 app.use(cors());
 
+app.use(bodyParser.urlencoded({extended: false}));
+
+app.use(bodyParser.json());
+
 //Bring in models
 let User = require("./models/user");
 
@@ -43,10 +48,28 @@ app.get("/users", (req, res) => {
     });
 })
 
-app.post("/users", (req, res) => {
+app.post("/users/register", (req, res) => {
+    let user = new User();
+    user.username = req.body.username;
+    user.email = req.body.email;
+    user.firstName = req.body.firstName;
+    user.lastName = req.body.lastName;
+    user.password = req.body.password;
 
+    user.save((err) => {
+        if(err){
+            console.log(err);
+            res.status(500).json(err);
+        }else{
+            //DESCOMMENT WHEN AUTHENTICATION IS READY
+            //res.status(200).json(users);
+        }
+    });
 })
 
+app.post("/users/login", (req, res) => {
+
+})
 
 //start server
 app.listen(3000, () => {
