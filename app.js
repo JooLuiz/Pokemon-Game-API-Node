@@ -47,6 +47,16 @@ app.get("/users", (req, res) => {
         }
     });
 })
+app.get("/users/:id", (req, res) => {
+    User.findById(req.params.id, (err, user) => {
+        if(!err){
+            user.statu(200).json(user);
+        }else{
+            console.log(err)
+            res.status(500).json(err);
+        }
+    })
+})
 
 app.post("/users/register", (req, res) => {
     let user = new User();
@@ -65,6 +75,41 @@ app.post("/users/register", (req, res) => {
             //res.status(200).json(users);
         }
     });
+})
+
+app.put("/users/:id", (req, res) => {
+    User.findById(req.params.id, (err, user) => {
+        if(!err){
+            user.username = req.body.username;
+            user.email = req.body.email;
+            user.firstName = req.body.firstName;
+            user.lastName = req.body.lastName;
+            user.password = req.body.password;
+        
+            user.save((err) => {
+                if(err){
+                    console.log(err);
+                    res.status(500).json(err);
+                }else{
+                    res.status(200).json(user);
+                }
+            });
+        }else{
+            console.log(err);
+            res.status(500).json(err);
+        }
+    })
+})
+
+app.delete("/users/:id", (req, res) => {
+    User.findById(req.params.id, (err, user) => {
+        if(!err){
+            user.delete();
+        }else{
+            console.log(err)
+            res.status(500).json(err);
+        }
+    })
 })
 
 app.post("/users/login", (req, res) => {
