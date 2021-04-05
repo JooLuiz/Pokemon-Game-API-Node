@@ -47,10 +47,12 @@ app.get("/users", (req, res) => {
         }
     });
 })
+
+
 app.get("/users/:id", (req, res) => {
     User.findById(req.params.id, (err, user) => {
         if(!err){
-            user.statu(200).json(user);
+            res.status(200).json(user);
         }else{
             console.log(err)
             res.status(500).json(err);
