@@ -92,19 +92,24 @@ app.post("/users/:id", (req, res) => {
             console.log(err);
             res.status(500).json(err);
         }else{
-            //DESCOMMENT WHEN AUTHENTICATION IS READY
             res.status(200).json(user);
         }
     })
 })
 
 app.delete("/users/:id", (req, res) => {
-    User.findById(req.params.id, (err, user) => {
-        if(!err){
-            user.delete();
-        }else{
-            console.log(err)
+    let query = {_id:req.params.id}
+
+    User.deleteOne(query, (err) => {
+        if(err){
+            console.log(err);
             res.status(500).json(err);
+        }else{
+            user = {
+                id: req.params.id
+            }
+            
+            res.status(200).json(user);
         }
     })
 })
