@@ -79,26 +79,21 @@ app.post("/users/register", (req, res) => {
     });
 })
 
-app.put("/users/:id", (req, res) => {
-    User.findById(req.params.id, (err, user) => {
-        if(!err){
-            user.username = req.body.username;
-            user.email = req.body.email;
-            user.firstName = req.body.firstName;
-            user.lastName = req.body.lastName;
-            user.password = req.body.password;
-        
-            user.save((err) => {
-                if(err){
-                    console.log(err);
-                    res.status(500).json(err);
-                }else{
-                    res.status(200).json(user);
-                }
-            });
-        }else{
+app.post("/users/:id", (req, res) => {
+    let user = {}
+    user.username = req.body.username;
+    user.email = req.body.email;
+    user.firstName = req.body.firstName;
+    user.lastName = req.body.lastName;
+
+    let query = {_id:req.params.id}
+    User.updateOne(query,user, (err) => {
+        if(err){
             console.log(err);
             res.status(500).json(err);
+        }else{
+            //DESCOMMENT WHEN AUTHENTICATION IS READY
+            res.status(200).json(user);
         }
     })
 })
