@@ -126,9 +126,6 @@ app.post("/auth/register", (req, res) => {
                 throw err;
             }
             user.password = hash
-            console.log("--------------")
-            console.log(user)
-            console.log("--------------")
             user.save()
                 .then(user => {
                     jwt.sign(
@@ -199,6 +196,17 @@ app.post("/auth", (req, res) => {
                 )
             })
     });
+})
+
+app.post("/user/getLoggedUser", auth, (req, res) => {
+    User.findById(req.user.id, (err, user) => {
+        if(!err){
+            res.status(200).json({user});
+        }else{
+            console.log(err)
+            res.status(500).json(err);
+        }
+    })
 })
 
 //start server
