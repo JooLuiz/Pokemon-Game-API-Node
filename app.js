@@ -126,25 +126,23 @@ app.post("/auth/register", (req, res) => {
                 throw err;
             }
             user.password = hash
+            console.log("--------------")
+            console.log(user)
+            console.log("--------------")
+            user.save()
+                .then(user => {
+                    jwt.sign(
+                        { id: user.id },
+                        config.get('jwtSecret'),
+                        { expiresIn: 3600 },
+                        (err, token) =>{
+                            if(err) throw err;
+                            res.status(201).json({token, user});
+                        }
+                    )
+            });
         })
     })
-
-    user.save((err) => {
-        if(err){
-            console.log(err);
-            res.status(500).json(err);
-        }
-    }).then(user => {
-            jwt.sign(
-                { id: user.id },
-                config.get('jwtSecret'),
-                { expiresIn: 3600 },
-                (err, token) =>{
-                    if(err) throw err;
-                    res.status(200).json(token, user);
-                }
-            )
-    });
 })
 
 app.post("/auth/login", (req, res) => {
@@ -168,7 +166,7 @@ app.post("/auth/login", (req, res) => {
                     { expiresIn: 3600 },
                     (err, token) =>{
                         if(err) throw err;
-                        res.status(200).json(token, user);
+                        res.status(200).json({token, user});
                     }
                 )
             })
@@ -196,7 +194,7 @@ app.post("/auth", (req, res) => {
                     { expiresIn: 3600 },
                     (err, token) =>{
                         if(err) throw err;
-                        res.status(200).json(token, user);
+                        res.status(200).json({token, user});
                     }
                 )
             })
