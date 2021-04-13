@@ -114,7 +114,7 @@ app.delete("/users/:id", auth, (req, res) => {
     })
 })
 
-app.post("/users/register", (req, res) => {
+app.post("/auth/register", (req, res) => {
     let user = new User();
     user.username = req.body.username;
     user.email = req.body.email;
@@ -147,7 +147,7 @@ app.post("/users/register", (req, res) => {
     });
 })
 
-app.post("/users/login", (req, res) => {
+app.post("/auth/login", (req, res) => {
     const { username, password } = req.body;
     if(!username || !password){
         return res.status(400).json({msg: "All fields must be filled"})
