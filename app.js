@@ -35,6 +35,8 @@ app.use('/users', require("./routes/user/user"));
 
 app.use('/auth', require("./routes/auth/auth"));
 
+app.use('/pokemonUser', require("./routes/pokemonUser/pokemonUser"));
+
 app.listen(3000, () => {
     console.log("server up! port 3000...")
 })
