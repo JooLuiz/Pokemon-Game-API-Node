@@ -3,7 +3,6 @@ const router = express.Router();
 const auth = require("../../middleware/auth");
 const User = require("../../models/user");
 
-//fight aggainst a pokemon
 router.get("/", auth, (req, res) => {
     User.find({}, (err, users) => {
         if(err){
@@ -62,13 +61,7 @@ router.delete("/:id", auth, (req, res) => {
                 id: req.params.id
             }
 
-            res.status(200).json({user: {
-                _id: user._id,
-                firstName: user.firstName,
-                lastName: user.lastName,
-                email: user.email,
-                username: user.username
-            }});
+            res.status(200).json(user);
         }
     })
 })
